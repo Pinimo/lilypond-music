@@ -363,6 +363,7 @@ silence = #(define-music-function (parser location arg) (ly:music?)
           >>
           \new Staff \with {instrumentName = "Soprano" }
           <<
+            \override Staff.VerticalAxisGroup.remove-empty = ##t
             \override Staff.VerticalAxisGroup.remove-first = ##t
             \anamneseGlobal \clef treble
             \new Voice = "anamneseSoprano" {
@@ -374,6 +375,7 @@ silence = #(define-music-function (parser location arg) (ly:music?)
           \new Staff \with { instrumentName = "Alto" }
           <<
             \override Staff.VerticalAxisGroup.remove-first = ##t
+            \override Staff.VerticalAxisGroup.remove-empty = ##t
             \anamneseGlobal \clef treble
             \new Voice = "anamneseAlto" {
               \silence \anamneseIntonationMusic
@@ -383,6 +385,7 @@ silence = #(define-music-function (parser location arg) (ly:music?)
           \new Staff \with { instrumentName = "Ténor" }
           <<
             \override Staff.VerticalAxisGroup.remove-first = ##t
+            \override Staff.VerticalAxisGroup.remove-empty = ##t
             \anamneseGlobal \clef "treble_8"
             \new Voice = "anamneseTenor" {
               \silence \anamneseIntonationMusic
@@ -392,6 +395,7 @@ silence = #(define-music-function (parser location arg) (ly:music?)
           \new Staff \with { instrumentName = "Basse" }
           <<
             \override Staff.VerticalAxisGroup.remove-first = ##t
+            \override Staff.VerticalAxisGroup.remove-empty = ##t
             \anamneseGlobal \clef bass
             \new Voice = "anamneseBasse" {
               \silence \anamneseIntonationMusic
@@ -405,10 +409,11 @@ silence = #(define-music-function (parser location arg) (ly:music?)
             \anamneseGlobal \clef treble
             \set Staff.printPartCombineTexts = ##f
             \new Voice <<
-              \silence \anamneseIntonationMusic 
-              \partcombine
-              <<  \silence \anamneseIntonationMusic \anamneseMainSopranoMusic >>
-              <<  \silence \anamneseIntonationMusic \anamneseMainAltoMusic >>
+              { \silence \anamneseIntonationMusic 
+                \partcombine
+                <<  \anamneseMainSopranoMusic >>
+                <<  \anamneseMainAltoMusic >>
+              }
             >>
           >>
           \new Staff <<
@@ -416,10 +421,12 @@ silence = #(define-music-function (parser location arg) (ly:music?)
             \anamneseGlobal \clef bass
             \set Staff.printPartCombineTexts = ##f
             \new Voice <<
-              \silence \anamneseIntonationMusic 
-              \partcombine
-              <<  \silence \anamneseIntonationMusic \anamneseMainTenorMusic >>
-              <<  \silence \anamneseIntonationMusic \anamneseMainBasseMusic >>
+              {
+                \silence \anamneseIntonationMusic 
+                \partcombine
+                <<  \anamneseMainTenorMusic >>
+                <<  \anamneseMainBasseMusic >>
+              }
             >>
           >>
         >>
